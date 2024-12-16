@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package hotelProto;
+
+
+service HotelService {
+  rpc SearchHotels(SearchRequest) returns (SearchResponse);
+  rpc GetAllHotels(GetAllHotelsRequest) returns (SearchResponse);
+  rpc ValidateUser(ValidateUserRequest) returns (ValidateUserResponse);
+}
+
+service ReservationService {
+  rpc MakeReservation(ReservationRequest) returns (ReservationResponse);
+  rpc GetAllReservations(GetAllReservationsRequest) returns (SearchReservation);
+  rpc ValidateUser(ValidateUserRequest) returns (ValidateUserResponse);
+}
+
+message SearchRequest {
+  string user = 1;
+  string passw = 2;
+  string city = 3;
+  string start_date = 4;
+  string end_date = 5;
+  int32 min_price = 6;
+  int32 max_price = 7;
+  int32 stars = 8;
+  int32 num_people = 9;
+}
+
+message SearchResponse {
+  repeated Hotel hotels = 1;
+  string error_message = 2;
+}
+
+message SearchReservation {
+  repeated Reservation reservations = 1;
+  string error_message = 2;
+}
+
+message Hotel {
+  string name = 1;
+  int32 etoiles = 2;
+  string typeChambre = 3;
+  int32 nbLits = 4;
+  string dateDispo = 5;
+  double prix = 6;
+  string ville = 7;
+  string imageUrl = 8;
+}
+
+message Reservation {
+  int64 idOffre = 1;
+  string dateReservation = 2;
+  string nomClient = 3;
+  string hotelName = 4;
+}
+
+
+message ReservationRequest {
+  string username = 1;
+  string password = 2 ;
+  string hotel_name = 3;
+  string guest_firstname = 4;
+  string guest_lastname = 5;
+  string guest_CB = 6;
+  string dateReservation = 7;
+}
+
+message ReservationResponse {
+  bool success = 1;
+  string message = 2;
+  string booking_reference = 3;
+}
+
+message GetAllHotelsRequest {
+  string usr = 1;
+  string pass = 2;
+}
+
+message GetAllReservationsRequest {
+  string username = 1;
+  string password = 2;
+  int64 clientId = 3;
+}
+
+message ValidateUserRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message ValidateUserResponse {
+  bool valid = 1;
+  string err_message = 2;
+}

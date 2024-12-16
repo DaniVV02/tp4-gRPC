@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_package = "proto";
+
+service HotelService {
+  rpc SearchHotels(SearchRequest) returns (SearchResponse);
+  rpc MakeReservation(ReservationRequest) returns (ReservationResponse);
+}
+
+message SearchRequest {
+  string city = 1;
+  string start_date = 2;
+  string end_date = 3;
+  int32 min_price = 4;
+  int32 max_price = 5;
+  int32 stars = 6;
+  int32 num_people = 7;
+}
+
+message SearchResponse {
+  repeated Hotel hotels = 1;
+}
+
+message Hotel {
+  string name = 1;
+  int32 etoiles = 2;
+  string typeChambre = 3;
+  int32 nbLits = 4;
+  string dateDispo = 5;
+  double prix = 6;
+}
+
+message ReservationRequest {
+  string hotel_name = 1;
+  string guest_name = 2;
+  string dateReservation = 3;
+}
+
+message ReservationResponse {
+  bool success = 1;
+  string message = 2;
+  string booking_reference = 3;
+}
